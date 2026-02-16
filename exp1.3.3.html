@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OOP Inheritance Demo</title>
+
+  <!-- React + ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #eef3f8;
+      font-family: Arial, sans-serif;
+    }
+
+    .app {
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .role {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .person {
+      background: #e5e7eb;
+      color: #374151;
+    }
+
+    .student {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .teacher {
+      background: #ede9fe;
+      color: #5b21b6;
+    }
+
+    .info {
+      margin: 6px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Base class
+    class Person {
+      constructor(name, age) {
+        this.name = name;
+        this.age = age;
+      }
+
+      getRole() {
+        return "Person";
+      }
+
+      getInfo() {
+        return this.name + " (Age: " + this.age + ")";
+      }
+    }
+
+    // Student class
+    class Student extends Person {
+      constructor(name, age, course) {
+        super(name, age);
+        this.course = course;
+      }
+
+      getRole() {
+        return "Student";
+      }
+
+      getInfo() {
+        return this.name + " - Course: " + this.course;
+      }
+    }
+
+    // Teacher class
+    class Teacher extends Person {
+      constructor(name, age, subject) {
+        super(name, age);
+        this.subject = subject;
+      }
+
+      getRole() {
+        return "Teacher";
+      }
+
+      getInfo() {
+        return this.name + " - Subject: " + this.subject;
+      }
+    }
+
+    function App() {
+      const people = [
+        new Person("Rahul", 30),
+        new Student("Anita", 20, "Computer Science"),
+        new Teacher("Dr Kumar", 45, "Mathematics")
+      ];
+
+      return (
+        <div className="app">
+          <h1>Person – Student – Teacher (OOP Demo)</h1>
+
+          <div className="grid">
+            {people.map((p, index) => (
+              <div className="card" key={index}>
+                <div
+                  className={
+                    "role " +
+                    (p.getRole() === "Student"
+                      ? "student"
+                      : p.getRole() === "Teacher"
+                      ? "teacher"
+                      : "person")
+                  }
+                >
+                  {p.getRole()}
+                </div>
+
+                <div className="info"><strong>Name:</strong> {p.name}</div>
+                <div className="info"><strong>Age:</strong> {p.age}</div>
+                <div className="info"><strong>Details:</strong> {p.getInfo()}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
